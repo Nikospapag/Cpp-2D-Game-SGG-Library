@@ -31,7 +31,7 @@ void update(float dt)
 
 int main(int RGC, char** argv)
 {
-	graphics::createWindow(800, 800, "Boing");
+	graphics::createWindow(900, 900, "BEESituation");
 	//graphics::setFullScreen(true);
 
 	init();

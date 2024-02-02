@@ -1,268 +1,134 @@
 #include "enemy.h"
 #include "sgg/graphics.h"
 #include "gamestate.h"
-
-
+#include <string>
+#include <iostream>
 #include "Enemy.h"
+#include "util.h"
+#include "box.h" 
 
 Enemy::Enemy(float initialX, float initialY)
-	: GameObject("Enemy"), m_en_width(1.0f), m_en_height(1.0f) {
+	: GameObject("Enemy"), m_en_width(0.9f), m_en_height(0.9f) {
 	m_en_x = initialX;
 	m_en_y = initialY;
 	
-	// Αρχικοποίηση χρονομέτρου
-	//resetMovementTimer();
+
 	init();
 }
 
-
+//Η init της Enemy και το φορτωμα ολων των διαφορετικων κινησεων των enemy στην enemy_sprites
 void Enemy::init() {
-	m_en_width /= 2.0f;
 
+
+	
+	float m_en_direction = -1.0f;	//Ορίζουμε και direction για να ξερουμε προς τα που κινειται
 	m_brush_enemy.fill_opacity = 1.0f;
 	m_brush_enemy.outline_opacity = 0.0f;
-	m_brush_enemy.texture = m_state->getFullAssetPath("bee_hurt.png");
-	//resetMovementTimer();
+	//m_brush_enemy.texture = m_state->getFullAssetPath("bee_hurt.png");
+	
+	setActive(true);
+
+
+
+	enemy_sprites.push_back(m_state->getFullAssetPath("bee1.png"));
+	enemy_sprites.push_back(m_state->getFullAssetPath("bee5.png"));
+	enemy_sprites.push_back(m_state->getFullAssetPath("bee2.png"));
+	enemy_sprites.push_back(m_state->getFullAssetPath("bee3.png"));
+	enemy_sprites.push_back(m_state->getFullAssetPath("bee4.png"));
+	enemy_sprites.push_back(m_state->getFullAssetPath("bee6.png"));
+
+
+
+	enemy_sprites2.push_back(m_state->getFullAssetPath("bee11.png"));
+	enemy_sprites2.push_back(m_state->getFullAssetPath("bee15.png"));
+	enemy_sprites2.push_back(m_state->getFullAssetPath("bee12.png"));
+	enemy_sprites2.push_back(m_state->getFullAssetPath("bee13.png"));
+	enemy_sprites2.push_back(m_state->getFullAssetPath("bee14.png"));
+	enemy_sprites2.push_back(m_state->getFullAssetPath("bee16.png"));
 
 
 }
 
-
+//Η update της Enemy και το m_enemy_box για ελεγχο των collision
 void Enemy::update(float dt) {
-	// Καλούμε την update της βάσης (GameObject)
-	GameObject::update(dt);
+	
+	
 	moveEnemy(dt);
 
-	//m_movement_timer += dt;
-	//if (m_movement_timer >= 4.0f) {  // Κάθε 4 δευτερόλεπτα
-		
-		//resetMovementTimer();
-	//}
+	m_enemy_box.m_pos_x = m_en_x;
+	m_enemy_box.m_pos_y = m_en_y;
+	m_enemy_box.m_width = m_en_width;
+	m_enemy_box.m_height = m_en_height;
+
+
+	GameObject::update(dt);
+	
+
+
+	
 }
 
-
+//H draw της enemy και ο ορισμος των εικονων που αντιστοιχουν αναλογα με την κατευθυνση που κινειται ο enemy χρησιμοποιωντας την s
 void Enemy::draw() {
 	float x = m_en_x + m_state->m_global_offset_x;
 	float y = m_en_y + m_state->m_global_offset_y;
 
-	graphics::drawRect(x, y, 1.0f, 1.0f, m_brush_enemy);
-}
+
+	
+	graphics::drawRect(x, y, m_en_width, m_en_height, m_brush_enemy);
+
+	if (m_state->m_debugging)
+		debugDraw();
 
 
-void Enemy::moveEnemy(float dt) {
+	if (m_en_direction < 0) {
+		
+		s = (int)fmod(1000.0f - m_en_x * 2.0f, enemy_sprites.size());
 
-	float delta_time = dt / 1000.0f;
-	float en_move = -1.0f;
-
-	m_en_x = std::max(-en_max_velocity, m_en_x + delta_time * en_move * en_accel_horizontal);
-	m_en_x -= 0.03f * m_en_x / (0.01f + fabs(m_en_x));
-
-	if (fabs(m_en_x) < 0.01f)
-		m_en_x = 0.0f;
-
-	//m_pos_x += m_en_x * delta_time;
-
-
-
-
-	/*if (m_move_left) {
-		en_move -= 1.0f;
+		m_brush_enemy.texture = enemy_sprites[s];
+		return;
 	}
-	else {
-		en_move += 1.0f;
-	}*/
+	else if (m_en_direction > 0) { 
+		
+		s = (int)fmod(1000.0f - m_en_x * 2.0f, enemy_sprites2.size());
 
-	//m_en_x = std::min(en_max_velocity, m_en_x + delta_time * en_move * en_accel_horizontal);
-	//m_en_x = std::max(-en_max_velocity, m_en_x);
-
-	//m_en_x -= 0.2f * m_en_x / (0.1f + fabs(m_en_x));
-	//if (fabs(m_en_x) < 0.01f)
-		//m_en_x = 0.0f;
-	//m_en_x += m_en_x * delta_time;
-}
-
-
-//void Enemy::resetMovementTimer() {
-	//m_movement_timer = 0.0f;
-//}
-
-
-
-
-
-
-
-
-
-
-
-/*Enemy::Enemy(float initialX, float initialY)
-	: GameObject("Enemy"), m_en_x(initialX), m_en_y(initialY), m_en_width(1.0f), m_en_height(1.0f) //m_initial_x(initialX), m_initial_y(initialY)
-{
+		m_brush_enemy.texture = enemy_sprites2[s];
+		return;
+	}
 
 
 }
 
-
-
-void Enemy::init() {
-	m_width /= 2.0f;
-
-	m_brush_enemy.fill_opacity = 1.0f;
-	m_brush_enemy.outline_opacity = 0.0f;
-	m_brush_enemy.texture = m_state->getFullAssetPath("bee_hurt.png");
-
-	m_state->m_global_offset_x = m_state->getCanvasWidth() / 2.0f - m_en_x;
-	m_state->m_global_offset_y = m_state->getCanvasHeight() / 2.0f - m_en_y;
-}
-
-
-
-
-void Enemy::moveEnemy(float dt)
-{
-	//m_en_x += m_max_en_velocity * dt;
-}
-
-
-
-
-void Enemy::update(float dt)
-{
-	//m_en_x += m_max_en_velocity * dt;
-	//GameObject::update(dt);
-
-
-	//moveEnemy(dt);
-
-
-	//GameObject::update(dt);
-}
-
-
-
-
-void Enemy::draw()
-{
-	graphics::drawRect(m_en_x, m_en_y, 1.0f, 1.0f, m_brush_enemy);
-	m_brush_enemy.outline_opacity = 0.0f;
-	m_brush_enemy.texture = m_state->getFullAssetPath("bee_hurt.png");
-
-
-}*/
-
-
-
-
-
-
-
-
-
-/*Enemy::Enemy(float initialX, float initialY)
-	: GameObject("Enemy"), m_en_x(initialX), m_en_y(initialY),
-	m_en_width(1.0f), m_en_height(1.0f) {
-	init();
-}
-
-void Enemy::init() {
-	m_en_width /= 2.0f;
-	m_brush_enemy.fill_opacity = 1.0f;
-	m_brush_enemy.outline_opacity = 0.0f;
-	m_brush_enemy.texture = m_state->getFullAssetPath("bee_hurt.png");
-	// Προσθέστε άλλες αρχικοποιήσεις αν απαιτούνται
-}
-
+//Οριζουμε την κινηση των enemies και ποτε να αλλαζουν κατευθυνση 
 void Enemy::moveEnemy(float dt) {
-	// Υλοποίηση κίνησης εχθρού, αν απαιτείται
+	float delta_time = dt / 1000.0f;
+	m_en_x += m_en_direction * m_en_speed * delta_time;
+
+	// Έλεγχος αν ο εχθρος έχει φτάσει στο οριο του χωρου
+	if (m_en_x <= 0.0f) {
+		m_en_x = 0.0f;
+		m_en_direction = 1.0f; // Αλλαγη κατεύθυνσης προς τα δεξια
+
+	}
+	else if (m_en_x >= 42.0f) {
+		m_en_x = 42.0f;
+		m_en_direction = -1.0f; // Αλλαγη κατεύθυνσης προς τα αριστερα
+
+	}
 }
 
-void Enemy::update(float dt) {
-	GameObject::update(dt);
-	// Προσθέστε κωδικά για ενημέρωση του εχθρού, αν απαιτείται
-}
-
-void Enemy::draw() {
-	float x = m_en_x;
-	float y = m_en_y;
-	float width = m_en_width;
-	float height = m_en_height;
-
-	// Σχεδιάζουμε τον εχθρό
-	graphics::drawRect(x, y, width, height, m_brush_enemy);
-	// Προσθέστε κωδικά για σχεδίαση του εχθρού
-}
-*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*Enemy::Enemy(float initialX, float initialY)
-	: GameObject("Enemy"), m_en_x(initialX), m_en_y(initialY), m_en_width(1.0f), m_en_height(1.0f), m_initial_x(initialX), m_initial_y(initialY)
+void Enemy::debugDraw()
 {
-	
+	graphics::Brush debug_brush;
+	SETCOLOR(debug_brush.fill_color, 1, 0.3f, 0);
+	SETCOLOR(debug_brush.outline_color, 1, 0.1f, 0);
+	debug_brush.fill_opacity = 0.1f;
+	debug_brush.outline_opacity = 1.0f;
+	graphics::drawRect(m_en_x + m_state->m_global_offset_x, m_en_y + m_state->m_global_offset_y, 1.0f, 1.0f, debug_brush);
+
 	
 }
 
 
-
-void Enemy::init() {
-	m_en_x = 4.0f;
-	m_en_y = 8.0f;
-	m_width /= 2.0f;
-
-	m_brush_enemy.fill_opacity = 1.0f;
-	m_brush_enemy.outline_opacity = 0.0f;
-	m_brush_enemy.texture = m_state->getFullAssetPath("bee_hurt.png");
-
-	//m_state->m_global_offset_x = m_state->getCanvasWidth() / 2.0f - m_initial_x;
-	//m_state->m_global_offset_y = m_state->getCanvasHeight() / 2.0f - m_initial_y;
-}
-
-
-
-
-void Enemy::moveEnemy(float dt)
-{
-	//m_en_x += m_max_en_velocity * dt;
-}
-
-
-
-
-void Enemy::update(float dt)
-{
-	//m_en_x += m_max_en_velocity * dt;
-	//GameObject::update(dt);
-
-
-	//moveEnemy(dt);
-	
-
-	//GameObject::update(dt);
-}
-
-
-
-
-void Enemy::draw()
-{
-	graphics::drawRect(m_en_x, m_en_y, 1.0f, 1.0f, m_brush_enemy);
-	m_brush_enemy.outline_opacity = 0.0f;
-	m_brush_enemy.texture = m_state->getFullAssetPath("bee_hurt.png");
-	
-
-}
-*/

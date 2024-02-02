@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-
+#include "box.h"
 
 class GameObject
 {
@@ -10,6 +10,7 @@ protected:
 	std::string m_name;
 	int m_id = 0;
 	bool m_active = true;
+	
 public:
 	GameObject(const std::string& name = "");
 	virtual void update(float dt) {}

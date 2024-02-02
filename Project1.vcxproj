@@ -24,7 +24,7 @@
     <ProjectGuid>{049cefe3-c7fc-471d-ad4e-e014a8b8a083}</ProjectGuid>
     <RootNamespace>Project1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Stages1,2,3,4</ProjectName>
+    <ProjectName>Game</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -135,18 +135,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Coins.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="gameobject.cpp" />
     <ClCompile Include="gamestate.cpp" />
+    <ClCompile Include="gate.cpp" />
+    <ClCompile Include="Hearts.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="box.h" />
+    <ClInclude Include="Coins.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="gameobject.h" />
     <ClInclude Include="gamestate.h" />
+    <ClInclude Include="gate.h" />
+    <ClInclude Include="Hearts.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="util.h" />
