@@ -1,11 +1,7 @@
 #include "enemy.h"
-#include "sgg/graphics.h"
-#include "gamestate.h"
-#include <string>
 #include <iostream>
-#include "Enemy.h"
 #include "util.h"
-#include "box.h" 
+
 
 Enemy::Enemy(float initialX, float initialY)
 	: GameObject("Enemy"), m_en_width(0.9f), m_en_height(0.9f) {

@@ -8,8 +8,8 @@ class GameState
 private:
 
 	std::string m_asset_path = "assets\\";
-	float m_canvas_width = 17.0f;
-	float m_canvas_height = 17.0f;
+	const float m_canvas_width = 17.0f;
+	const float m_canvas_height = 17.0f;
 
 	static GameState* m_unique_instance;
 

@@ -2,7 +2,6 @@
 #include "gameobject.h"
 #include "box.h"
 #include "sgg/graphics.h"
-#include "Enemy.h"
 #include <list>
 
 class Player : public GameObject , public Box

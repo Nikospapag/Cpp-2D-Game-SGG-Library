@@ -1,8 +1,6 @@
 #include "gamestate.h"
 #include "level.h"
 #include "player.h"
-#include "enemy.h"
-#include "Coins.h"
 #include <thread>
 #include <chrono>
 #include "util.h"
@@ -53,6 +51,7 @@ void GameState::initLevel2() {
 	if (m_player)
 	{
 		delete m_player;
+		m_player = nullptr;
 	}
 
 	m_level2 = new Level();

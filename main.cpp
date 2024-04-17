@@ -1,7 +1,4 @@
 #include "sgg/graphics.h"
-#include <stdio.h>
-#include "util.h"
-#include <string>
 #include "gamestate.h"
 
 

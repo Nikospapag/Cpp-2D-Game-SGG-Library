@@ -1,9 +1,6 @@
-#include "sgg/graphics.h"
-#include "gamestate.h"
-#include <string>
+
 #include <iostream>
 #include "util.h"
-#include "box.h" 
 #include "Hearts.h"
 
 Hearts::Hearts(float x, float y)

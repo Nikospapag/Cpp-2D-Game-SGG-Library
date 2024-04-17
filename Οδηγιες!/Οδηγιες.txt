@@ -1,0 +1,10 @@
+Τα αρχεία graphics.h και scancodes.h βρίσκονται στο φάκελο include πατώντας μετα τον υποφάκελο sgg
+
+
+
+ΚΑΤΕΒΑΣΤΕ ΤΑ ASSETS ΤΟΥ ΠΑΙΧΝΙΔΙΟΥ ΑΠΟ ΤΟΝ ΣΥΝΔΕΣΜΟ:
+https://drive.google.com/drive/folders/1SCrZ8sodgj3GwRwK2Vg7spO6CWNERFNS?usp=drive_link
+
+
+Τα assets(εικόνες και ήχους) που θα κατεβάσετε να τα τοποθετήσετε στον φάκελο assets που βρίσκεται
+μέσα στον φάκελο bin του project (με σχετική διαδρομή .\bin\assets σχετικά με τον φάκελο ρίζα)

@@ -1,10 +1,8 @@
-#include "sgg/graphics.h"
-#include "gamestate.h"
-#include <string>
+
 #include <iostream>
 #include "util.h"
-#include "box.h" 
-#include "Gate.h"
+
+#include "gate.h"
 
 Gate::Gate(float x, float y)
 	: GameObject("Hearts"), gate_width(1.0f), gate_height(1.0f) {
@@ -54,7 +52,6 @@ void Gate::draw() {
 
 	graphics::drawRect(x, y, gate_width, gate_height, m_brush_gate);
 
-	//if (m_state->m_debugging)
-		//debugDraw();
+	
 
 }

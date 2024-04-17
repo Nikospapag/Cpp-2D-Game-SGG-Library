@@ -1,9 +1,4 @@
 #include "player.h"
-#include "sgg/graphics.h"
-#include "gamestate.h"
-#include "enemy.h"
-#include "box.h"  ///αν χρειαζεται
-#include <list>
 #include <iostream>
 #include "util.h"
 #include <cmath>
@@ -46,7 +41,7 @@ void Player::movePlayer(float dt)
 	}
 
 	if (m_is_jumping && !graphics::getKeyState(graphics::SCANCODE_W)) {
-		m_is_jumping = false; // Το άλμα ολοκληρώθηκε
+		m_is_jumping = false; // Το άλμα ολοκληρωθηκε
 	}
 
 	

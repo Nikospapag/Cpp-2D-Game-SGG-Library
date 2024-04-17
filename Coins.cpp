@@ -1,9 +1,6 @@
-#include "sgg/graphics.h"
-#include "gamestate.h"
-#include <string>
+
 #include <iostream>
-#include "util.h"
-#include "box.h" 
+#include "util.h" 
 #include "Coins.h"
 
 Coins::Coins(float x, float y)

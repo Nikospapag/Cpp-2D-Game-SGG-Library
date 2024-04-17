@@ -2,19 +2,12 @@
 #include <sgg/graphics.h>
 #include "player.h"
 #include "util.h"
-#include "gamestate.h"
 #include <fstream>
-#include <sstream>
 #include <string>
 #include <iostream>
-#include "enemy.h"
-#include "Coins.h"
-#include "Hearts.h"
-#include "gate.h"
 #include <chrono>
-#include <ctime>
-#include "timer.cpp"
-#include "timer.h"
+
+
 //Αρχικοποιουμε καποιες μεταβλητες  Timepoinτ που θα χρησιμευσουν για την effect() και για τις συγκρουσεις παικτη-enemy
 using TimePoint = std::chrono::steady_clock::time_point;
 TimePoint lastCollisionTime;
@@ -430,7 +423,7 @@ void Level::update(float dt)
 	if (m_state->getPlayer()->isActive())
 		m_state->getPlayer()->update(dt);
 	
-
+	
 	//Αφορα τη μεθοδο effect που θελουμε να διαρκεσει 100 milliseconds-στιγμιαια
 	auto currentTime = std::chrono::steady_clock::now();
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - effectStartTime);
@@ -504,52 +497,64 @@ void Level::update(float dt)
 void Level::checkPlayerEnemyCollision()
 {
 	
+	
 	for (auto& enemy : m_enemies)
 	{
 		
 		if (enemy->isActive())
 		{
-				if (m_state->getPlayer()->m_player_box.intersectDown(enemy->m_enemy_box)) {  
-					
+		
+
+				if (m_state->getPlayer()->m_player_box.intersectDown(enemy->m_enemy_box)) {
+
 
 
 					auto currentTime = std::chrono::steady_clock::now();
 					auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - lastCollisionTime);
 
-					if (elapsedTime.count() >= 1.5f) {			
-						
-						
+					if (elapsedTime.count() >= 1.2f) {
+
+
 						graphics::playSound(m_state->getFullAssetPath("bee_hurt.wav"), 0.6f);
 						m_state->updateScore(200); //Αυξανουμε το σκορ αν σκοτωσε ο παικτης τον εχθρο
 						ScoreLevel += 200;
 						enemy->setActive(false);//Απενεργοποιουμε εχθρο
-						
-						
+
+
 						std::cerr << "Intersectdown " << std::endl;
 						lastCollisionTime = currentTime;
 						enemyToDelete = enemy; //Βλεπουμε ποιος enemy παιθανε με σκοπο να τον κανουμε delete 
-					}
-				}
-				if (m_state->getPlayer()->m_player_box.intersectSideways(enemy->m_enemy_box) || m_state->getPlayer()->m_player_box.intersectUp(enemy->m_enemy_box)) {
-			
-
-						auto currentTime = std::chrono::steady_clock::now();
-						auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - lastCollisionTime);
-
-						if (elapsedTime.count() >= 1.0) {
-							effect();//Εφε επειδη εχασε ζωη ο παικτης
-							graphics::playSound(m_state->getFullAssetPath("playerhurt.wav"), 0.8f);
-							m_state->getPlayer()->decreaseLife();//Μειωνουμε τη ζωη του παικτη 
-							std::cerr << "Intersect with enemy. Offset: " << std::endl;
-							lastCollisionTime = currentTime;
-
-						}
 						
+					}
+					
 				}
 
+
+
+				if ( m_state->getPlayer()->m_player_box.intersectSideways(enemy->m_enemy_box) || m_state->getPlayer()->m_player_box.intersectUp(enemy->m_enemy_box)) {
+				
+
+
+					auto currentTime = std::chrono::steady_clock::now();
+					auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - lastCollisionTime);
+
+					if (elapsedTime.count() >= 0.7) {
+						effect();//Εφε επειδη εχασε ζωη ο παικτης
+						graphics::playSound(m_state->getFullAssetPath("playerhurt.wav"), 0.8f);
+						m_state->getPlayer()->decreaseLife();//Μειωνουμε τη ζωη του παικτη 
+						std::cerr << "Intersect with enemy. Offset: " << std::endl;
+						lastCollisionTime = currentTime;
+						
+					}
+					
+				}
+
+			
 		}
+		
 	}
 	//Διαγραφουμε τον εχθρο που παιθανε 
+	
 	if (enemyToDelete)
 	{
 		m_enemies.erase(std::remove(m_enemies.begin(), m_enemies.end(), enemyToDelete), m_enemies.end());

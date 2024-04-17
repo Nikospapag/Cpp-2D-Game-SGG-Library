@@ -7,7 +7,6 @@
 #include "player.h"
 #include "enemy.h"
 #include "Coins.h"
-#include "timer.h"
 #include "Hearts.h"
 #include "gate.h"
 
@@ -37,7 +36,7 @@ class Level : public GameObject
 	graphics::Brush m_block_brush;
 	graphics::Brush m_block_brush_debug;
 	
-
+	
 	
 	void checkPlayerGate();
 	void drawBlock(int i);
